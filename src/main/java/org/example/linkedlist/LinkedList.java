@@ -1,6 +1,7 @@
 package org.example.linkedlist;
 
 import java.util.Iterator;
+import java.util.List;
 
 public class LinkedList<T> implements Iterable<T> {
 
@@ -53,6 +54,46 @@ public class LinkedList<T> implements Iterable<T> {
             T data = iterator.next();
             each.call(data);
         }
+    }
+
+    public List<T> filter2(Filter<T> f) {
+        List<T> temp = new java.util.LinkedList<>();
+        forEach2((data) -> {
+            if (f.filter(data))
+                temp.add(data);
+        });
+        return temp;
+    }
+
+    public List<T> filter(Filter<T> f) {
+        List<T> temp = new java.util.LinkedList<>();
+        Iterator<T> iterator = iterator();
+        while (iterator.hasNext()) {
+            T data = iterator.next();
+            if (f.filter(data))
+                temp.add(data);
+        }
+        return temp;
+    }
+
+
+    public List<T> map2(Map<T> m) {
+        List<T> temp = new java.util.LinkedList<>();
+        forEach2((data) -> {
+            temp.add(m.map(data));
+        });
+        return temp;
+    }
+
+
+    public List<T> map(Map<T> m) {
+        List<T> temp = new java.util.LinkedList<>();
+        Iterator<T> iterator = iterator();
+        while (iterator.hasNext()) {
+            T data = iterator.next();
+            temp.add(m.map(data));
+        }
+        return temp;
     }
 
     public void remove(T item) {
